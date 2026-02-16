@@ -1,0 +1,23 @@
+## Impedir el acceso directo al listado de directorios ##
+Options -Indexes
+
+## Activar reescritura de URLs ##
+RewriteEngine On
+
+# Si tu proyecto está en una subcarpeta, por ejemplo /miapp/
+# agrega esta línea (descoméntala y cambia el nombre):
+RewriteBase /proyectoseguridad/
+
+# Ignorar archivos y carpetas reales
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Reescribir rutas tipo:
+# /accion
+RewriteRule ^([a-zA-Z0-9_-]+)/?$ index.php?action=$1 [L,QSA]
+
+# /accion/dato
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ index.php?action=$1&dato=$2 [L,QSA]
+
+# /accion/dato/op
+RewriteRule ^([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)/?$ index.php?action=$1&dato=$2&op=$3 [L,QSA]
